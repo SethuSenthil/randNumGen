@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button, Slider,Vibration } from 'react-native';
+import { Text, View, StyleSheet, Button, Slider,Vibration, Image} from 'react-native';
 
 import RNShake from 'react-native-shake';
 import { ShakeEventExpo } from './ShakeEventExpo';
@@ -28,15 +28,21 @@ export default class App extends React.Component {
   }
 
   render() {
+    var out =         <Text style={{fontSize:200,textAlign: 'center'}}>
+    {this.state.number}
+  </Text>;
+    if(this.state.maxNumber == 6 && this.state.minNumber == 1){
+      out =  <Image
+      source={require('/assets/dice_1.png')}
+    />
+    }
     return (
       <View style={{flex:1,justifyContent:'space-around'}}>
 
         <Text style={{fontSize:50,textAlign: 'center'}}>
             {this.state.minNumber} - {this.state.maxNumber}
           </Text>
-        <Text style={{fontSize:200,textAlign: 'center'}}>
-          {this.state.number}
-        </Text>
+        {out}
         <View style={{padding: 20}}>
                 <Button
                 title = "Roll"
