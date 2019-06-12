@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button, Slider,Vibration, Image} from 'react-native';
+import { Text, View, StyleSheet, Button, Slider,Vibration, Image, Alert} from 'react-native';
 
 import RNShake from 'react-native-shake';
 import { ShakeEventExpo } from './ShakeEventExpo';
@@ -11,29 +11,39 @@ export default class App extends React.Component {
     this.state = { number: null, maxNumber:6, minNumber:1, maxMaxNumber: 100,minMinNumber: 1};
   }
 
-  componentWillMount() {
-    RNShake.addEventListener('ShakeEvent', () => {
-      // Your code...
-      this.roll()
-    });
-    ShakeEventExpo.addListener(() => {
-      Alert.alert('Shaking!!!');
-      this.roll()
-    });
-  }
- 
-  componentWillUnmount() {
-    RNShake.removeEventListener('ShakeEvent');
-    ShakeEventExpo.removeListener();
+  componentDidMount() {
+    this._subscribe();
   }
 
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
+
+  _subscribe = () => {
+    this._subscription = Accelerometer.addListener(
+      accelerometerData => {
+        let magnitude = Math.pow(  Math.pow(accelerometerData.x, 2) + Math.pow(accelerometerData.y, 2) + Math.pow(accelerometerData.z, 2)  ,.5)
+
+        if(Math.abs(this.state.magnitude-1)>1.5)
+          this.roll();
+      }
+    ); 
+    Accelerometer.setUpdateInterval(
+      16
+    ); 
+  };
+
+  _unsubscribe = () => {
+    this._subscription && this._subscription.remove(); 
+    this._subscription = null;
+  };
+
   render() {
-    var out =         <Text style={{fontSize:200,textAlign: 'center'}}>
+    var out = <Text style={{fontSize:200,textAlign: 'center'}}>
     {this.state.number}
   </Text>;
-    if(this.state.maxNumber == 6 && this.state.minNumber == 1){
-      out =  <Image
-      source={require('/assets/dice_1.png')}
+    if(this.state.maxNumber == 6 && this.state.minNumber == 1&&this.state.number){
+      out =  <Image source={require('/assets/dice_'+this.state.number+'.png')}
     />
     }
     return (
