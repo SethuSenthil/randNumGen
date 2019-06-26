@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { Text, View, StyleSheet, Button, Slider,Vibration, Image, Alert, AsyncStorage, ActivityIndicator, TouchableOpacity} from 'react-native';
-
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { Accelerometer } from 'expo-sensors';
 
 const diceImgs = [
@@ -18,6 +18,11 @@ const pennyImgs = [
     require('../assets/tails.gif'),
 ]
 
+const hapticOptions = {
+    enableVibrateFallback: true,
+    ignoreAndroidSystemSettings: false
+  };
+
 export function updateMaxMaxNumber(val){
     this.setState({maxMaxNumber:val})
 }
@@ -26,6 +31,9 @@ export function updateMinMinNumber(val){
 }
 export function updateRandomOrg(val){
     this.setState({randomOrg:val})
+}
+export function randNumScreenReset(){
+    this.componentWillMount();
 }
 
 export default class RandNumScreen extends React.Component {
@@ -36,6 +44,7 @@ export default class RandNumScreen extends React.Component {
         updateMaxMaxNumber = updateMaxMaxNumber.bind(this);
         updateMinMinNumber = updateMinMinNumber.bind(this);
         updateRandomOrg = updateRandomOrg.bind(this)
+        randNumScreenReset = randNumScreenReset.bind(this)
     }
 
     static navigationOptions = {
@@ -52,25 +61,25 @@ export default class RandNumScreen extends React.Component {
                 this.setState({randomOrg:true})   
         })
         let maxMaxNumberPromise = AsyncStorage.getItem('maxMaxNumber').then((val)=>{
-            if(val)
+            if(val&&Number(val)!=NaN)
                 this.setState({maxMaxNumber:Number(val)})
             else
                 this.setState({maxMaxNumber:10})   //Default to 10
         })
         let minMinNumberPromise = AsyncStorage.getItem('minMinNumber').then((val)=>{
-            if(val)
+            if(val&&Number(val)!=NaN)
                 this.setState({minMinNumber:Number(val)})
             else
                 this.setState({minMinNumber:0})   //Default to 0
         })
         let maxNumberPromise = AsyncStorage.getItem('maxNumber').then((val)=>{
-            if(val)
+            if(val&&Number(val)!=NaN)
                 this.setState({maxNumber:Number(val)})
             else
                 this.setState({maxNumber:6})   //Default to 6
         })
         let minNumberPromise = AsyncStorage.getItem('minNumber').then((val)=>{
-            if(val)
+            if(val&&Number(val)!=NaN)
                 this.setState({minNumber:Number(val)})
             else
                 this.setState({minNumber:1})   //Default to 1
@@ -147,7 +156,7 @@ export default class RandNumScreen extends React.Component {
                 </TouchableOpacity>
                 <View style={{padding: 20}}>
                     <Button
-                        title = "Roll"
+                        title = "Get Random Number"
                         onPress={this.roll}
                         disabled={this.state.loading}
                     />
@@ -182,7 +191,8 @@ export default class RandNumScreen extends React.Component {
   
     roll = () => {
         if(!this.state.loading){
-            Vibration.vibrate(10000);
+            //Vibration.vibrate(10000);
+            ReactNativeHapticFeedback.trigger("impactLight", hapticOptions);
             //Defaults to true
             this.setState({loading:true});
             if(!this.state.randomOrg)
