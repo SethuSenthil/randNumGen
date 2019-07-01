@@ -83,7 +83,7 @@ RNTester/build
 /Libraries/RCTRequired/**/*.xcodeproj
 
 # CocoaPods
-/template/ios/Pods/
-/template/ios/Podfile.lock
+/ios/Pods/
+/ios/Podfile.lock
 RNTester/Pods/
 RNTester/RNTesterPods.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
