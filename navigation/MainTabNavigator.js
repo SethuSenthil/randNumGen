@@ -7,6 +7,8 @@ import { Icon } from 'react-native-elements'
 import RandNumScreen from '../screens/RandNumScreen';
 import RandNumFullScreen from '../screens/RandNumFullScreen';
 import ListScreen from '../screens/ListScreen';
+import EditListScreen from '../screens/EditListScreen';
+import CameraScreen from '../screens/CameraScreen';
 import SettingScreen from '../screens/SettingScreen';
 
 const HomeStack = createStackNavigator({
@@ -42,11 +44,14 @@ HomeStack.navigationOptions = ({ navigation }) => {
 
 const ListStack = createStackNavigator({
   List: ListScreen,
+  EditList: EditListScreen,
+  Camera: CameraScreen
 });
 
-ListScreen.navigationOptions = {
+//Navigation options are defined in the ListScreen Class
+/*ListScreen.navigationOptions = {
   title: 'Lists',
-}
+}*/
 
 ListStack.navigationOptions = {
   tabBarLabel: 'Lists',

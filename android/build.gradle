@@ -66,6 +66,11 @@ allprojects {
 
     // Want this last so that we never end up with a stale cache
     mavenLocal()
+    
+            maven {
+            // expo-camera bundles a custom com.google.android:cameraview
+            url "$rootDir/../node_modules/expo-camera/android/maven"
+        }
   }
 }
 

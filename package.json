@@ -8,12 +8,16 @@
   },
   "dependencies": {
     "expo": "^32.0.0",
+    "expo-camera": "^5.0.1",
     "expokit": "^32.1.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-camera": "^2.11.0",
     "react-native-elements": "^1.1.0",
     "react-native-haptic-feedback": "^1.8.0",
     "react-native-shake": "^3.3.1",
+    "react-native-super-grid": "^3.0.7",
+    "react-native-swipeable-row": "^0.8.1",
     "react-navigation": "^3.11.0"
   },
   "devDependencies": {

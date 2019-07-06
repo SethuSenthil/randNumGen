@@ -195,23 +195,27 @@ export default class RandNumScreen extends React.Component {
             ReactNativeHapticFeedback.trigger("impactLight", hapticOptions);
             //Defaults to true
             this.setState({loading:true});
-            if(!this.state.randomOrg)
+            if(!this.state.randomOrg){
                 //Generate random number on device
+                ReactNativeHapticFeedback.trigger("impactHeavy", hapticOptions);
                 this.setState({
                     number:Math.floor(Math.random()*(this.state.maxNumber-this.state.minNumber+1)+this.state.minNumber), 
                     loading:false
                 })
-            else{
+            }else{
                 if(this.state.minNumber!=this.state.maxNumber){
                     //Generate random number using random.org's API
                     fetch("https://www.random.org/integers/?num=1&col=1&base=10&format=plain&rnd=new&min="+this.state.minNumber+"&max="+this.state.maxNumber)
                     .then(res=>{
                         return res.json()
                     })
-                    .then(num=>this.setState({
-                        number:num,
-                        loading:false
-                    }))
+                    .then(num=>{
+                        ReactNativeHapticFeedback.trigger("impactHeavy", hapticOptions);
+                        this.setState({
+                            number:num,
+                            loading:false
+                        })
+                    })
                     .catch(err=>{
                         this.setState({
                             number:Math.floor(Math.random()*(this.state.maxNumber-this.state.minNumber+1)+this.state.minNumber), 
@@ -221,6 +225,7 @@ export default class RandNumScreen extends React.Component {
                     })
                 }else{
                     //Don't waste bandwidth by querying random.org if max and min are the same
+                    ReactNativeHapticFeedback.trigger("impactHeavy", hapticOptions);
                     Alert.alert("Your max and min values are the same")
                     this.setState({
                         number: this.state.minNumber, 

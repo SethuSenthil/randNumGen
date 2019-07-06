@@ -23,7 +23,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "randnumgen.kihtrak.com"
     },
     "isDetached": true,
     "detach": {
