@@ -21,7 +21,7 @@ export default class SettingScreen extends React.Component {
         //Get the previous value of the random.org button and updated the state accordingly
         AsyncStorage.getItem('randomorg').then((val)=>{
             //Defaults to true
-            if(val && val=="false")
+            if(val && val==="false")
                 this.setState({randomorg:false})
             else
                 this.setState({randomorg:true})
@@ -63,7 +63,7 @@ export default class SettingScreen extends React.Component {
                 //Call global function to update RandNumScreen
                 updateMaxMaxNumber(val)
             }else{
-                Alert.alert("Maximum can't be less than or equal Minimum")
+                Alert.alert("Maximum can not be less than or equal Minimum")
                 this.setState({
                     maxMaxNumberError: true
                 })
@@ -88,7 +88,7 @@ export default class SettingScreen extends React.Component {
                 //Call global function to update RandNumScreen
                 updateMinMinNumber(val)
             }else{
-                Alert.alert("Minimum can't be greater than or equal to Maximum")
+                Alert.alert("Minimum can not be greater than or equal to Maximum")
                 this.setState({
                     minMinNumberError: true
                 })
@@ -124,8 +124,8 @@ export default class SettingScreen extends React.Component {
                         keyboardType:"numeric",
                         inputStyle:{
                             borderColor: this.state.maxMaxNumberError? "red" : "grey", 
-                            borderWidth: 2, 
-                            borderRadius: 20,
+                            borderWidth: 6, 
+                            borderRadius: 80,
                             textAlign: 'center',
                         },
                         onEndEditing:this.setMaxMaxNumber,
@@ -144,7 +144,7 @@ export default class SettingScreen extends React.Component {
                         inputStyle:{
                             borderColor: this.state.minMinNumberError? "red" : "grey", 
                             borderWidth: 2, 
-                            borderRadius: 20,
+                            borderRadius: 70,
                             textAlign: 'center',
                         },
                         onEndEditing:this.setMinMinNumber,
@@ -173,7 +173,7 @@ export default class SettingScreen extends React.Component {
                     bottomDivider
                     onPress={this.reset}
                 />
-                <Text style={{fontSize:10,paddingHorizontal:10}}><Text style={{color: 'blue',textDecorationLine: 'underline'}} onPress={()=>Linking.openURL("http://random.org")}>Random.org</Text> is not affliated with this app in anyway.</Text>
+                <Text style={{fontSize:70,paddingHorizontal:30}}><Text style={{color: 'red',textDecorationLine: 'underline'}} onPress={()=>Linking.openURL("http://example.com")}>Random.org</Text> is not affliated with this app in anyway.</Text>
                 <View style={{height:40}}></View>
             </ScrollView>
         );
